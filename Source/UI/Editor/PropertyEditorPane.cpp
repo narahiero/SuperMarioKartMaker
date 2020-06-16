@@ -16,17 +16,24 @@ PropertyEditorPane::PropertyEditorPane(QWidget* parent) : QScrollArea(parent)
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setWidgetResizable(true);
 
+    createWidget();
     createLayout();
 }
 
 PropertyEditorPane::~PropertyEditorPane() = default;
+
+void PropertyEditorPane::createWidget()
+{
+    m_widget = new QWidget(this);
+    setWidget(m_widget);
+}
 
 void PropertyEditorPane::createLayout()
 {
     m_layout = new QVBoxLayout;
     m_layout->setAlignment(Qt::AlignTop);
 
-    setLayout(m_layout);
+    m_widget->setLayout(m_layout);
 }
 
 void PropertyEditorPane::addIntProperty(

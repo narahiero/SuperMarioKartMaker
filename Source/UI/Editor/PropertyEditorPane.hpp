@@ -56,9 +56,11 @@ private:
 
     // initializers
 
+    void createWidget();
     void createLayout();
 
     // fields
 
+    QWidget* m_widget;
     QVBoxLayout* m_layout;
 };
