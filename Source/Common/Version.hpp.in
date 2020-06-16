@@ -1,0 +1,15 @@
+//////////////////////////////////////////////////
+//  Copyright (c) 2020 Nara Hiero
+//
+// This file is licensed under GPLv3+
+// Refer to the `License.txt` file included.
+//////////////////////////////////////////////////
+
+#define SMKM_VERSION_MAJOR @SuperMarioKartMaker_VERSION_MAJOR@
+#define SMKM_VERSION_MINOR @SuperMarioKartMaker_VERSION_MINOR@
+#define SMKM_VERSION_PATCH @SuperMarioKartMaker_VERSION_PATCH@
+
+#define SMKM_VERSION_STR \
+    "@SuperMarioKartMaker_VERSION_MAJOR@" "." \
+    "@SuperMarioKartMaker_VERSION_MINOR@" "." \
+    "@SuperMarioKartMaker_VERSION_PATCH@"
