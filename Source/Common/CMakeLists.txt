@@ -10,6 +10,8 @@ configure_file(Version.hpp.in Version.hpp @ONLY)
 ########################################
 
 add_library(Common STATIC
+    DataChunk.cpp
+    DataChunk.hpp
     Observable.cpp
     Observable.hpp
     Property.hpp

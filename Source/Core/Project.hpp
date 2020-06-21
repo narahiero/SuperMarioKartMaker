@@ -7,25 +7,24 @@
 
 #pragma once
 
-#include <QMenuBar>
+#include <string>
 
-class MenuBar final : public QMenuBar
+#include "Common/Property.hpp"
+
+class Project final
 {
-    Q_OBJECT
 
 public:
 
-    explicit MenuBar(QWidget* parent = nullptr);
-    ~MenuBar();
+    Project();
+    Project(const std::string& name);
+    ~Project();
 
-signals:
+    Property<std::string>& name();
 
-    void newProject();
-    void exit();
+    bool hasUnsavedChanges() const;
 
 private:
 
-    // initializers
-
-    void createFileMenu();
+    Property<std::string> m_name;
 };

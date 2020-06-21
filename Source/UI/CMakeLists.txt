@@ -52,9 +52,18 @@ add_executable(SMKM
     Editor/SMKM/Editors.hpp
     Editor/SMKM/PropertiesEditor.hpp
     Editor/SMKM/PropertiesEditor.cpp
+
+    # Wizard
+    Wizard/AbstractWizard.cpp
+    Wizard/AbstractWizard.hpp
+    Wizard/Private/AbstractWizardField.cpp
+    Wizard/Private/AbstractWizardField.hpp
+
+    Wizard/SMKM/ProjectWizard.cpp
+    Wizard/SMKM/ProjectWizard.hpp
 )
 
-target_link_libraries(SMKM Common Qt5::Widgets)
+target_link_libraries(SMKM Core Qt5::Widgets)
 
 
 ########################################

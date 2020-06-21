@@ -9,9 +9,6 @@
 
 #include <QMainWindow>
 
-// TEMP CODE
-#include "Common/Property.hpp"
-
 class EditorManager;
 class MenuBar;
 
@@ -23,21 +20,20 @@ public:
 
     static MainWindow* instance();
 
-    // TEMP CODE
-    static Property<std::string> s_prop0;
-    static Property<std::string> s_prop1;
-    static Property<std::string> s_prop2;
-    static Property<int> s_prop3;
-    static Property<float> s_prop4;
-    static Property<double> s_prop5;
-    static Property<bool> s_prop6;
-
     explicit MainWindow();
     ~MainWindow();
 
+    bool requestClose();
+
+    void showProjectWizard();
+
     // field getter/setters
-    
+
     EditorManager* editorManager() const;
+
+protected:
+
+    void closeEvent(QCloseEvent* event) override;
 
 private:
 

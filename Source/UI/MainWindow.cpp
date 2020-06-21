@@ -7,19 +7,19 @@
 
 #include "UI/MainWindow.hpp"
 
+#include <QCloseEvent>
+#include <QMessageBox>
+
+#include "Core/Core.hpp"
+#include "Core/Project.hpp"
+
 #include "UI/Editor/EditorManager.hpp"
 #include "UI/Editor/SMKM/Editors.hpp"
 #include "UI/MenuBar.hpp"
+#include "UI/Wizard/SMKM/ProjectWizard.hpp"
 
 // TEMP CODE
 #include "UI/Editor/EditorContainer.hpp"
-Property<std::string> MainWindow::s_prop0("some def value");
-Property<std::string> MainWindow::s_prop1("1 value");
-Property<std::string> MainWindow::s_prop2(":3 =^.^=");
-Property<int> MainWindow::s_prop3(32);
-Property<float> MainWindow::s_prop4(135.75f);
-Property<double> MainWindow::s_prop5(9120.8325);
-Property<bool> MainWindow::s_prop6(true);
 
 MainWindow* MainWindow::s_instance = nullptr;
 
@@ -46,6 +46,10 @@ void MainWindow::createMenuBar()
 {
     m_menuBar = new MenuBar(this);
 
+    // file menu
+    connect(m_menuBar, &MenuBar::newProject, this, &MainWindow::showProjectWizard);
+    connect(m_menuBar, &MenuBar::exit, this, &MainWindow::close);
+
     setMenuBar(m_menuBar);
 }
 
@@ -61,7 +65,52 @@ void MainWindow::createEditorManager()
     setCentralWidget(m_editorManager);
 }
 
+bool MainWindow::requestClose()
+{
+    if (Core::hasActiveProject() && Core::activeProject()->hasUnsavedChanges())
+    {
+        QMessageBox msgBox(QMessageBox::Warning, "Save Project?", QStringLiteral(
+                "Do you want to save your project '%1' before exiting Super Mario Kart Maker?"
+            ).arg(QString::fromStdString(Core::activeProject()->name().get())),
+            QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel
+        );
+
+        msgBox.exec();
+
+        int opt = msgBox.result();
+        if (opt == QMessageBox::Save)
+        {
+
+        }
+
+        if (opt == QMessageBox::Save || opt == QMessageBox::Discard)
+        {
+            return true;
+        }
+    }
+
+    return true;
+}
+
+void MainWindow::showProjectWizard()
+{
+    ProjectWizard wizard(this);
+    wizard.run();
+}
+
 EditorManager* MainWindow::editorManager() const
 {
     return m_editorManager;
+}
+
+void MainWindow::closeEvent(QCloseEvent* event)
+{
+    if (requestClose())
+    {
+        event->accept();
+    }
+    else
+    {
+        event->ignore();
+    }
 }

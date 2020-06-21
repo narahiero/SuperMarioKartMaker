@@ -7,25 +7,21 @@
 
 #pragma once
 
-#include <QMenuBar>
+#include <cstdint>
+#include <memory>
 
-class MenuBar final : public QMenuBar
+class DataChunk final
 {
-    Q_OBJECT
 
 public:
 
-    explicit MenuBar(QWidget* parent = nullptr);
-    ~MenuBar();
-
-signals:
-
-    void newProject();
-    void exit();
+    DataChunk(size_t size);
+    DataChunk(const DataChunk& src);
+    DataChunk(DataChunk&& src);
+    ~DataChunk();
 
 private:
 
-    // initializers
-
-    void createFileMenu();
+    size_t m_size;
+    std::shared_ptr<uint8_t[]> m_data;
 };

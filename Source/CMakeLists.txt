@@ -13,5 +13,6 @@ include_directories(
 ########################################
 
 add_subdirectory(Common)
+add_subdirectory(Core)
 
 add_subdirectory(UI)
