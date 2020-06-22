@@ -54,7 +54,7 @@ void AbstractWizard::createButtons()
     connect(m_cancelButton, &QPushButton::clicked, this, &AbstractWizard::close);
 }
 
-void AbstractWizard::run()
+int AbstractWizard::run()
 {
     Q_ASSERT(m_startId >= 0);
 
@@ -69,7 +69,7 @@ void AbstractWizard::run()
     }
     m_nextButton->setEnabled(m_curr->isComplete());
 
-    exec();
+    return exec();
 }
 
 void AbstractWizard::setPage(int id, AbstractWizardPage* page)
@@ -112,6 +112,16 @@ QVariant AbstractWizard::field(const QString& name) const
     return m_fields[name]->value();
 }
 
+void AbstractWizard::setRetVal(int retVal)
+{
+    m_retVal = retVal;
+}
+
+int AbstractWizard::retVal() const
+{
+    return m_retVal;
+}
+
 void AbstractWizard::nextPage()
 {
     Q_ASSERT(m_curr != nullptr);
@@ -119,7 +129,7 @@ void AbstractWizard::nextPage()
     if (m_curr->finalPage())
     {
         finished();
-        close();
+        done(m_retVal);
     }
     else
     {
@@ -136,6 +146,7 @@ void AbstractWizard::nextPage()
         {
             m_nextButton->setText(tr("&Finish"));
         }
+        m_nextButton->setEnabled(m_curr->isComplete());
     }
 }
 

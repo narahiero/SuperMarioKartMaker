@@ -21,6 +21,8 @@
 // TEMP CODE
 #include "UI/Editor/EditorContainer.hpp"
 
+constexpr const char* BASE_WINDOW_TITLE = "Super Mario Kart Maker";
+
 MainWindow* MainWindow::s_instance = nullptr;
 
 MainWindow* MainWindow::instance()
@@ -33,7 +35,7 @@ MainWindow::MainWindow() : QMainWindow()
     Q_ASSERT(s_instance == nullptr);
     s_instance = this;
 
-    setWindowTitle("Super Mario Kart Maker");
+    setWindowTitle(BASE_WINDOW_TITLE);
     resize(1080, 720);
 
     createMenuBar();
@@ -95,7 +97,14 @@ bool MainWindow::requestClose()
 void MainWindow::showProjectWizard()
 {
     ProjectWizard wizard(this);
-    wizard.run();
+
+    if (wizard.run() == ProjectWizard::Created)
+    {
+        setWindowTitle(QStringLiteral("%1 - %2")
+            .arg(QString::fromStdString(Core::activeProject()->name().get()))
+            .arg(BASE_WINDOW_TITLE)
+        );
+    }
 }
 
 EditorManager* MainWindow::editorManager() const

@@ -11,17 +11,27 @@
 #include <QLabel>
 #include <QLineEdit>
 
+#include "Core/Core.hpp"
+
 ProjectWizard::ProjectWizard(QWidget* parent) : AbstractWizard(parent)
 {
     setWindowTitle("Project Wizard");
-    resize(480, 640);
+    resize(480, 360);
 
     setPage(Main, new MainPage);
 
     setStartId(Main);
+
+    setRetVal(Cancelled);
 }
 
 ProjectWizard::~ProjectWizard() = default;
+
+void ProjectWizard::finished()
+{
+    Core::newActiveProject(field("name").toString().toStdString());
+    setRetVal(Created);
+}
 
 ////// MainPage class //////////////////
 

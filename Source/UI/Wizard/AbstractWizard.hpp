@@ -32,7 +32,7 @@ public:
     ~AbstractWizard();
 
     // use this instead of exec()
-    void run();
+    int run();
 
     void setPage(int id, AbstractWizardPage* page);
 
@@ -48,6 +48,9 @@ public:
     int startId() const;
 
     QVariant field(const QString& name) const;
+
+    void setRetVal(int retVal);
+    int retVal() const;
 
 private:
 
@@ -83,6 +86,8 @@ private:
     QPushButton* m_nextButton;
     QPushButton* m_backButton;
     QPushButton* m_cancelButton;
+
+    int m_retVal;
 };
 
 class AbstractWizardPage : public QWidget

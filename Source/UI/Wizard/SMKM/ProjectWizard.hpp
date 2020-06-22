@@ -15,6 +15,12 @@ class ProjectWizard final : public AbstractWizard
 
 public:
 
+    enum Result
+    {
+        Cancelled = 0,
+        Created = 1
+    };
+
     enum PageId
     {
         Main
@@ -22,6 +28,10 @@ public:
 
     explicit ProjectWizard(QWidget* parent = nullptr);
     ~ProjectWizard();
+
+    // reimplemented functions
+
+    void finished() override;
 
 private:
 
