@@ -8,6 +8,8 @@
 #include "UI/Editor/Private/EditorContainerSplitter.hpp"
 
 #include "UI/Editor/AbstractEditor.hpp"
+#include "UI/Editor/EditorContainer.hpp"
+#include "UI/Editor/EditorManager.hpp"
 
 EditorContainerSplitter::EditorContainerSplitter(EditorContainer* container) : QSplitter(),
     m_container{container},
@@ -71,6 +73,15 @@ void EditorContainerSplitter::split(AbstractEditor* editor, Qt::Orientation o)
         sp->addWidget(editor);
         sp->addWidget(editor->duplicate());
     }
+}
+
+void EditorContainerSplitter::morph(AbstractEditor* editor, int typeId)
+{
+    auto typeInfo = m_container->manager()->typeInfo(typeId);
+
+    replaceWidget(indexOf(editor), typeInfo->m_factory(m_container));
+
+    editor->deleteLater();
 }
 
 EditorContainer* EditorContainerSplitter::container() const

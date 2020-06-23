@@ -16,6 +16,7 @@ public:
 
     enum EditorType
     {
+        Outliner,
         Properties
     };
 

@@ -39,6 +39,10 @@ private:
     void createTypeSelect();
     void createActions();
 
+    // slots
+
+    void onTypeSelected(int typeId);
+
     // fields
 
     AbstractEditor* m_editor;

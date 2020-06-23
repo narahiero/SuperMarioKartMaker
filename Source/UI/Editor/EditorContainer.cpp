@@ -66,6 +66,18 @@ void EditorContainer::split(AbstractEditor* editor, Qt::Orientation orientation)
     sp->split(editor, orientation);
 }
 
+void EditorContainer::morph(AbstractEditor* editor, int typeId)
+{
+    Q_ASSERT(editor != nullptr);
+
+    EditorContainerSplitter* sp = qobject_cast<EditorContainerSplitter*>(editor->parent());
+
+    Q_ASSERT(sp != nullptr);
+    Q_ASSERT(sp->container() == this);
+
+    sp->morph(editor, typeId);
+}
+
 EditorManager* EditorContainer::manager() const
 {
     return m_manager;

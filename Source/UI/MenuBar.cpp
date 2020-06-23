@@ -7,9 +7,13 @@
 
 #include "UI/MenuBar.hpp"
 
+#include "UI/CoreCallbacks.hpp"
+
 MenuBar::MenuBar(QWidget* parent) : QMenuBar(parent)
 {
     createFileMenu();
+
+    connectAll();
 }
 
 MenuBar::~MenuBar() = default;
@@ -22,5 +26,21 @@ void MenuBar::createFileMenu()
 
     file->addSeparator();
 
+    m_closeProject = file->addAction(tr("&Close Project"), this, &MenuBar::closeProject);
+    m_closeProject->setDisabled(true);
+
+    file->addSeparator();
+
     file->addAction(tr("E&xit"), this, &MenuBar::exit, QKeySequence::Quit);
+}
+
+void MenuBar::connectAll()
+{
+    connect(CoreCallbacks::instance(), &CoreCallbacks::activeProjectChanged,
+        this, &MenuBar::activeProjectChanged);
+}
+
+void MenuBar::activeProjectChanged(const std::shared_ptr<Project>& project)
+{
+    m_closeProject->setEnabled(project != nullptr);
 }

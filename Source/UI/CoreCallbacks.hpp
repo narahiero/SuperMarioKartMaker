@@ -7,37 +7,22 @@
 
 #pragma once
 
-#include <QMenuBar>
+#include <QApplication>
 
 class Project;
 
-class MenuBar final : public QMenuBar
+class CoreCallbacks final : public QObject
 {
     Q_OBJECT
 
 public:
 
-    explicit MenuBar(QWidget* parent = nullptr);
-    ~MenuBar();
+    static CoreCallbacks* instance();
+
+    explicit CoreCallbacks(QObject* parent = nullptr);
+    ~CoreCallbacks();
 
 signals:
 
-    void newProject();
-    void closeProject();
-    void exit();
-
-private:
-
-    // initializers
-
-    void createFileMenu();
-    void connectAll();
-
-    // slots
-
     void activeProjectChanged(const std::shared_ptr<Project>& project);
-
-    // fields
-
-    QAction* m_closeProject;
 };

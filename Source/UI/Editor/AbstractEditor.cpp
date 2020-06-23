@@ -59,6 +59,11 @@ void AbstractEditor::splitV()
     m_container->split(this, Qt::Vertical);
 }
 
+void AbstractEditor::morphInto(int typeId)
+{
+    m_container->morph(this, typeId);
+}
+
 EditorManager* AbstractEditor::manager() const
 {
     return m_manager;

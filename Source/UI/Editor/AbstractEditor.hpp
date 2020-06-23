@@ -45,6 +45,8 @@ public:
     void splitH();
     void splitV();
 
+    void morphInto(int typeId);
+
     // field getters/setters
 
     EditorManager* manager() const;

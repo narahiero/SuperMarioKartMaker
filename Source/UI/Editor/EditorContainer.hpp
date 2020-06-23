@@ -31,6 +31,8 @@ public:
 
     void split(AbstractEditor* editor, Qt::Orientation orientation);
 
+    void morph(AbstractEditor* editor, int typeId);
+
     // TEMP CODE
     void temp()
     {

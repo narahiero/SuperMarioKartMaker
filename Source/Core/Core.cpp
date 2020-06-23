@@ -7,6 +7,7 @@
 
 #include "Core/Core.hpp"
 
+#include "Core/Callbacks.hpp"
 #include "Core/Project.hpp"
 
 namespace Core
@@ -19,10 +20,10 @@ bool hasActiveProject()
     return s_project != nullptr;
 }
 
-std::shared_ptr<Project> newActiveProject(const std::string& name)
+void setActiveProject(const std::shared_ptr<Project>& project)
 {
-    s_project = std::make_shared<Project>(name);
-    return s_project;
+    s_project = project;
+    Callbacks::activeProjectChanged(project);
 }
 
 std::shared_ptr<Project> activeProject()

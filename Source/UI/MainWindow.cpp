@@ -13,6 +13,7 @@
 #include "Core/Core.hpp"
 #include "Core/Project.hpp"
 
+#include "UI/CoreCallbacks.hpp"
 #include "UI/Editor/EditorManager.hpp"
 #include "UI/Editor/SMKM/Editors.hpp"
 #include "UI/MenuBar.hpp"
@@ -38,11 +39,19 @@ MainWindow::MainWindow() : QMainWindow()
     setWindowTitle(BASE_WINDOW_TITLE);
     resize(1080, 720);
 
+    createCoreCallbacks();
     createMenuBar();
     createEditorManager();
 }
 
 MainWindow::~MainWindow() = default;
+
+void MainWindow::createCoreCallbacks()
+{
+    m_coreCBs = new CoreCallbacks(this);
+
+    connect(m_coreCBs, &CoreCallbacks::activeProjectChanged, this, &MainWindow::activeProjectChanged);
+}
 
 void MainWindow::createMenuBar()
 {
@@ -50,6 +59,7 @@ void MainWindow::createMenuBar()
 
     // file menu
     connect(m_menuBar, &MenuBar::newProject, this, &MainWindow::showProjectWizard);
+    connect(m_menuBar, &MenuBar::closeProject, this, &MainWindow::closeActiveProject);
     connect(m_menuBar, &MenuBar::exit, this, &MainWindow::close);
 
     setMenuBar(m_menuBar);
@@ -94,17 +104,28 @@ bool MainWindow::requestClose()
     return true;
 }
 
+bool MainWindow::closeActiveProject()
+{
+    Core::setActiveProject(nullptr);
+    return true;
+}
+
 void MainWindow::showProjectWizard()
 {
     ProjectWizard wizard(this);
 
     if (wizard.run() == ProjectWizard::Created)
     {
-        setWindowTitle(QStringLiteral("%1 - %2")
+        /*setWindowTitle(QStringLiteral("%1 - %2")
             .arg(QString::fromStdString(Core::activeProject()->name().get()))
             .arg(BASE_WINDOW_TITLE)
-        );
+        );*/
     }
+}
+
+CoreCallbacks* MainWindow::coreCallbacks() const
+{
+    return m_coreCBs;
 }
 
 EditorManager* MainWindow::editorManager() const
@@ -121,5 +142,20 @@ void MainWindow::closeEvent(QCloseEvent* event)
     else
     {
         event->ignore();
+    }
+}
+
+void MainWindow::activeProjectChanged(const std::shared_ptr<Project>& project)
+{
+    if (project)
+    {
+        setWindowTitle(QStringLiteral("%1 - %2")
+            .arg(QString::fromStdString(project->name().get()))
+            .arg(BASE_WINDOW_TITLE)
+        );
+    }
+    else
+    {
+        setWindowTitle(BASE_WINDOW_TITLE);
     }
 }

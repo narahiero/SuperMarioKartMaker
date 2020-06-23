@@ -9,6 +9,9 @@
 
 #include <QMainWindow>
 
+class Project;
+
+class CoreCallbacks;
 class EditorManager;
 class MenuBar;
 
@@ -25,9 +28,13 @@ public:
 
     bool requestClose();
 
+    bool closeActiveProject();
+
     void showProjectWizard();
 
     // field getter/setters
+
+    CoreCallbacks* coreCallbacks() const;
 
     EditorManager* editorManager() const;
 
@@ -41,10 +48,17 @@ private:
 
     // initializers
 
+    void createCoreCallbacks();
     void createMenuBar();
     void createEditorManager();
 
+    // slots
+
+    void activeProjectChanged(const std::shared_ptr<Project>& project);
+
     // fields
+
+    CoreCallbacks* m_coreCBs;
 
     MenuBar* m_menuBar;
 

@@ -12,6 +12,7 @@
 #include <QLineEdit>
 
 #include "Core/Core.hpp"
+#include "Core/Project.hpp"
 
 ProjectWizard::ProjectWizard(QWidget* parent) : AbstractWizard(parent)
 {
@@ -29,7 +30,8 @@ ProjectWizard::~ProjectWizard() = default;
 
 void ProjectWizard::finished()
 {
-    Core::newActiveProject(field("name").toString().toStdString());
+    Core::setActiveProject(std::make_shared<Project>(field("name").toString().toStdString()));
+
     setRetVal(Created);
 }
 

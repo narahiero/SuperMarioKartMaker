@@ -27,6 +27,8 @@ public:
 
     void split(AbstractEditor* editor, Qt::Orientation orientation);
 
+    void morph(AbstractEditor* editor, int typeId);
+
     // field getters/setters
 
     EditorContainer* container() const;

@@ -7,15 +7,17 @@
 
 #pragma once
 
+#include <functional>
 #include <memory>
-#include <string>
 
 class Project;
 
-namespace Core
+namespace Callbacks
 {
 
-bool hasActiveProject();
-void setActiveProject(const std::shared_ptr<Project>& project);
-std::shared_ptr<Project> activeProject();
+using ActiveProjectChangedCB = std::function<void(const std::shared_ptr<Project>&)>;
+
+void setActiveProjectChangedCB(ActiveProjectChangedCB cb);
+
+void activeProjectChanged(const std::shared_ptr<Project>& project);
 }

@@ -3,6 +3,8 @@
 ########################################
 
 add_library(Core STATIC
+    Callbacks.cpp
+    Callbacks.hpp
     Core.cpp
     Core.hpp
     Project.cpp

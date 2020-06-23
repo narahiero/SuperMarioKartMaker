@@ -27,6 +27,8 @@ set(CMAKE_AUTOMOC ON)
 add_executable(SMKM
     main.cpp
 
+    CoreCallbacks.cpp
+    CoreCallbacks.hpp
     MainWindow.cpp
     MainWindow.hpp
     MenuBar.cpp
@@ -50,6 +52,8 @@ add_executable(SMKM
 
     Editor/SMKM/Editors.cpp
     Editor/SMKM/Editors.hpp
+    Editor/SMKM/Outliner.cpp
+    Editor/SMKM/Outliner.hpp
     Editor/SMKM/PropertiesEditor.hpp
     Editor/SMKM/PropertiesEditor.cpp
 

@@ -43,8 +43,12 @@ void EditorBar::createTypeSelect()
     {
         m_typeSelect->addItem(typeInfo.value(typeId)->m_name, typeId);
     }
+    m_typeSelect->setCurrentIndex(m_typeId);
 
     m_layout->addWidget(m_typeSelect);
+
+    connect(m_typeSelect, qOverload<int>(&QComboBox::currentIndexChanged),
+        this, &EditorBar::onTypeSelected);
 }
 
 void EditorBar::createActions()
@@ -72,4 +76,9 @@ void EditorBar::contextMenuEvent(QContextMenuEvent* event)
     menu.addAction(m_splitV);
     menu.addAction(m_remove);
     menu.exec(event->globalPos());
+}
+
+void EditorBar::onTypeSelected(int typeId)
+{
+    m_editor->morphInto(m_typeSelect->currentData().toInt());
 }
